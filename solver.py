@@ -15,11 +15,13 @@ class Solver(object):
     def go(self):
         while True:
             word = raw_input("Input the word with . for blanks: ")
+            # DON'T BOTHER CHECKING NOTHING, NOW, Y'HEAR!
+            # INPUT IS ALWAYS VALID!
             if self.solve(word):
                 break
 
     def solve(self, query):
-        # Query is . for unknown, letters filled in as appropriate
+        # Query is . for unknowns, letters filled in as appropriate
         # The words can't contain letters that are already there
         # Also not the letters we've already tried
         bad_chars = set(filter(lambda x: x != '.', query) + "".join(self.tried))
@@ -29,7 +31,7 @@ class Solver(object):
         # Replace the wildcards with the pattern
         reg = re.sub('\.', ignore_pattern, query)
         # Words that match the resulting pattern
-        possibilities = filter(lambda x: re.match(reg, x), 
+        possibilities = filter(lambda x: re.match(reg, x),
                                self.words[len(query)])
         # One left? We've found the word
         if len(possibilities) == 1:
@@ -45,12 +47,12 @@ class Solver(object):
             most_likely = max((concat.count(x), x) for x in chars)[1]
             print "Here are the options: ", " ".join(possibilities)
             wf = float(len(filter(lambda x: most_likely in x, possibilities)))
-            likelihood =  100.0 * wf / len(possibilities)
+            likelihood = 100.0 * wf / len(possibilities)
             print ("The most likely next character is '%s' "
                   "(probability: %0.2f%%)" % (most_likely, likelihood))
             self.tried.append(most_likely)
             return False
-        
+
 
 def main():
     s = Solver()
