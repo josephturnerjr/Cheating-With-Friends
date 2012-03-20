@@ -19,7 +19,6 @@ class Solver
         word_sets = (x for x in words when x.length == l for l in lengths)
         @words = {}
         @words[key] = word_sets[i] for key, i in lengths
-        console.log @words
         # Keep track of tried letters
         @tried = []
 
@@ -58,7 +57,6 @@ class Solver
         reg = new RegExp(query.replace /\./g, ignore_pattern)
         # Words that match the resulting pattern
         possibilities = (x for x in @words[query.length] when x.match(reg))
-        console.log possibilities
         # One left? We've found the word
         if possibilities.length == 1
             console.log "Here it is, bro: #{possibilities}"
@@ -70,15 +68,17 @@ class Solver
             # Calculate the letter frequencies for each non-guessed letter,
             #   the max being the most likely
             chars = (x for x in concat.unique() when x not in bad_chars)
-#            most_likely = Math.max.apply((concat.count(x), x) for x in chars)[1]
-#            print "Here are the options: ", " ".join(possibilities)
-#            wf = float(len(filter(lambda x: most_likely in x, possibilities)))
-#            likelihood = 100.0 * wf / len(possibilities)
-#            print ("The most likely next character is '%s' "
-#                  "(probability: %0.2f%%)" % (most_likely, likelihood))
-#            @tried.append(most_likely)
-#            return False
+            scores = ((y for y in concat when y == x).length for x in chars)
+            most_likely = chars[scores.indexOf(Math.max.apply(Math, scores))]
+            console.log "Here are the options: " + possibilities.join(" ")
+            ml_regex = new RegExp(most_likely)
+            wf = (p for p in possibilities when p.match(ml_regex)).length
+            likelihood = 100.0 * wf / possibilities.length
+            console.log "The most likely next character is '#{most_likely}'"
+            console.log "(probability: #{likelihood})"
+            @tried.push(most_likely)
+            return false
 
 
-s = new Solver('test.txt')
+s = new Solver('wordlist.txt')
 s.go()
