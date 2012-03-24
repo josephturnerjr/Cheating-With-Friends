@@ -36,7 +36,7 @@ class CheatWidget
         @el.find('input[name="misses"]').keyup(=>@handle_word())
 
     handle_word: () ->
-        word = $('input[name="word"]').val()
+        word = $('input[name="word"]').val().replace(/[^a-zA-Z]/g, '.')
         misses = $('input[name="misses"]').val()
         results = @solver.solve(word, misses.split(""))
         possibilities = results.get_possibilities()
