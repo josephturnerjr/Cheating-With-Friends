@@ -39,8 +39,17 @@ class CheatWidget
         word = $('input[name="word"]').val()
         misses = $('input[name="misses"]').val()
         results = @solver.solve(word, misses.split(""))
-        @el.find('.cheat_words').html("<p>#{results.get_possibilities().join(" ")}</p>")
-        @el.find('.cheat_letters').html("<p>#{results.get_letter_freqs().join(" ")}</p>")
+        possibilities = results.get_possibilities()
+        @el.find('.cheat_words').html("<p>#{possibilities.join(" ")}</p>")
+        @draw_letter_freqs(results.get_letter_freqs(), possibilities.length)
+
+    draw_letter_freqs: (freqs, wordcount) ->
+        htmltext = ""
+        for v in freqs
+            [freq, letter] = v
+            likelihood = (100.0 * freq) / wordcount
+            htmltext += "<div style='background-color: blue; height: 1em; margin: 1px; width: #{likelihood}px; float: left;'></div><p>#{letter} #{likelihood.toFixed(2)}%</p>"
+        @el.find('.cheat_letters').html(htmltext)
 
     update_options: (options) ->
         @options = options
