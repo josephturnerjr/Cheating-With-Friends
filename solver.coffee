@@ -1,9 +1,9 @@
 # Hash-based set implementation from the Coffeescript cookbook
 # http://coffeescriptcookbook.com/chapters/arrays/removing-duplicate-elements-from-arrays
 Array::unique = ->
-  output = {}
-  output[@[key]] = @[key] for key in [0...@length]
-  value for key, value of output
+    output = {}
+    output[@[key]] = @[key] for key in [0...@length]
+    value for key, value of output
 
 class Solver
     constructor: (data) ->
@@ -15,7 +15,6 @@ class Solver
         word_sets = (x for x in words when x.length == l for l in lengths)
         @words = {}
         @words[key] = word_sets[i] for key, i in lengths
-        # Keep track of tried letters
 
     solve: (query, tried) ->
         # Query is . for unknowns, letters filled in as appropriate
@@ -29,7 +28,9 @@ class Solver
         # Replace the wildcards with the pattern
         reg = new RegExp(query.replace /\./g, ignore_pattern)
         # Words that match the resulting pattern
-        possibilities = (x for x in @words[query.length] when x.match(reg))
+        possibilities = []
+        if @words[query.length]?
+            possibilities = (x for x in @words[query.length] when x.match(reg))
         return new SolverResults(possibilities, bad_chars)
 
 
