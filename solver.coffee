@@ -5,8 +5,6 @@ Array::unique = ->
   output[@[key]] = @[key] for key in [0...@length]
   value for key, value of output
 
-fs = require('fs')
-
 class Solver
     constructor: (data) ->
         words = new String(data).trim().split(' ')
@@ -54,44 +52,3 @@ class SolverResults
             @scores = ([(y for y in concat when y == x).length, x] for x in chars)
             @scores.sort((a,b) -> b[0] - a[0])
         return @scores
-
-
-class NodeSolver
-    constructor: (wordfile) ->
-        data = fs.readFileSync wordfile
-        @solver = new Solver(data)
-        @tried = []
-
-    ask: (question, format, callback) ->
-        stdin = process.stdin
-        stdout = process.stdout
-        stdin.resume()
-        stdout.write question 
-        stdin.once 'data', (data) ->
-            data = data.toString().trim()
-            if format.test data
-                callback data
-            else
-                stdout.write "It should match: "+ format +"\n"
-                ask question, format, callback
-
-    go: ->
-        @ask "Input the word with . for blanks: ", /[.a-z]*/, (word) =>
-            # DON'T BOTHER CHECKING NOTHING, NOW, Y'HEAR!
-            # INPUT IS ALWAYS VALID!
-            results = @solver.solve(word, @tried)
-            freqs = results.get_letter_freqs()
-            possibilities = results.get_possibilities()
-            # One left? We've found the word
-            if possibilities.length == 1
-                console.log "Here it is, bro: #{possibilities}"
-                process.exit()
-            else
-                console.log "Here are the options: #{possibilities.join(" ")}"
-                console.log "The most likely next letter is #{freqs[0][1]} (probability: #{100.0 * freqs[0][0] / possibilities.length}"
-                @tried.push(freqs[0][1])
-                @go()
-
-wordfile = 'wordlist.txt'
-ns = new NodeSolver(wordfile)
-ns.go()
