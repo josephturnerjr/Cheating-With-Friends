@@ -292,6 +292,15 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
+body {
+  background-color: #234280;
+  color: #3a3a3a;
+}
+
+header h1 {
+  margin-left: 10px;
+  color: #fcfbf3;
+}
 
 #container {
   width: 1020px;
@@ -300,11 +309,11 @@ td { vertical-align: top; }
 
 #cheatmain > div{
   border-radius: 5px;
+  background-color: #fcfbf3;
 }
 .cheat_input {
   float: left;
   width: 280px;
-  background-color: #4ba2ab;
   margin: 0 10px;
   padding: 0 20px 20px 20px;
 }
@@ -313,26 +322,23 @@ td { vertical-align: top; }
   float: left;
   width: 280px;
   background-color: #234280;
-  color: white;
   text-align: center;
   margin: 0 10px;
   padding: 0 20px 20px 20px;
 }
 
 .cheat_letters h1 {
-  font-size: 1.6em;
+  text-transform: uppercase;
 }
 .cheat_letters h2 {
-  font-size: 2.0em;
-  text-transform: uppercase;
 }
 .pmchart {
   position: relative;
   text-align: center;
-  border-top: 1px dashed white;
-  border-left: 1px solid white;
-  border-right: 1px solid white;
-  border-bottom: 1px solid white;
+  border-top: 1px dashed gray;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
   height: 100px; 
   border-radius: 0px;
 }
@@ -347,6 +353,7 @@ td { vertical-align: top; }
   position: absolute; 
   right:0%; 
   bottom: 100%;
+  font-size: 0.8em;
 }
 
 .pmcolumn {
@@ -375,6 +382,5 @@ td { vertical-align: top; }
   width: 280px;
   margin: 0 10px;
   padding: 0 20px 20px 20px;
-  background-color: green;
 }
 

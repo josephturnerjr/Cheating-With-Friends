@@ -23,13 +23,18 @@ class CheatWidget
         @solver = new Solver(data)
         template = $("
                       <div class='cheat_input'>
+                        <h2></h2>
                         <p>Enter the word, using any non-alphabet character for an unknown:</p>
                         <input name='word' type='text'></input>
                         <p>Enter any excluded letters (i.e. letters you've tried that weren't in the word):</p>
                         <input name='misses' type='text'></input>
                       </div>
-                      <div class='cheat_letters'></div>
-                      <div class='cheat_words'></div>
+                      <div class='cheat_letters'>
+                        <h2>The most likely next letter is:</h2>
+                      </div>
+                      <div class='cheat_words'>
+                        <h2>Possible words:</h2>
+                      </div>
                      ")
         @el.append template 
         @word_input = @el.find('input[name="word"]').keyup(=>@handle_word())
@@ -47,16 +52,17 @@ class CheatWidget
         @draw_letter_freqs(results.get_letter_freqs(), possibilities.length)
 
     draw_words: (possibilities) ->
-        @cheat_words.html("<h1>Possible words:</h1><p>#{possibilities.join(" ")}</p>")
+        @cheat_words.html("<h2>Possible words:</h2> 
+                           <p>#{possibilities.join(" ")}</p>")
 
     draw_letter_freqs: (freqs, wordcount) ->
         if freqs.length is 0
-            @cheat_letters.html("")
+            @cheat_letters.html("<h2>The most likely next letter is:</h2>")
         else
             likely_letters = (f[1] for f in freqs when f[0] == freqs[0][0])
-            htmltext = "<h1>The most likely next letter#{if likely_letters.length == 1 then " is" else "s are"}:</h1>
-                        <h2>#{likely_letters.join(", ")}</h2>
-                        <h1>with probability #{(100.0 * freqs[0][0] / wordcount).toFixed(2)}%</h1>"
+            htmltext = "<h2>The most likely next letter#{if likely_letters.length == 1 then " is" else "s are"}:</h2>
+                        <h1>#{likely_letters.join(", ")}</h1>
+                        <h2>with probability #{(100.0 * freqs[0][0] / wordcount).toFixed(2)}%</h2>"
             @cheat_letters.html(htmltext)
             graph_div = $("<div class='pmchart clearfix'></div>")
             for v in freqs
