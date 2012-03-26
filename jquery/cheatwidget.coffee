@@ -23,33 +23,53 @@ class CheatWidget
         @solver = new Solver(data)
         template = $("
                       <div class='cheat_input'>
+                        <p>Enter the word, using any non-alphabet character for an unknown:</p>
                         <input name='word' type='text'></input>
+                        <p>Enter any excluded letters (i.e. letters you've tried that weren't in the word):</p>
                         <input name='misses' type='text'></input>
                       </div>
-                      <div class='cheat_words'></div>
                       <div class='cheat_letters'></div>
+                      <div class='cheat_words'></div>
                      ")
         @el.append template 
-        # Is there a way to access the unbound this in a fat-arrow function?
-        _this = this
-        @el.find('input[name="word"]').keyup(=>@handle_word())
-        @el.find('input[name="misses"]').keyup(=>@handle_word())
+        @word_input = @el.find('input[name="word"]').keyup(=>@handle_word())
+        @misses_input = @el.find('input[name="misses"]').keyup(=>@handle_word())
+        @cheat_words = @el.find('.cheat_words')
+        @cheat_letters = @el.find('.cheat_letters')
 
     handle_word: () ->
-        word = $('input[name="word"]').val().replace(/[^a-zA-Z]/g, '.')
-        misses = $('input[name="misses"]').val()
+        word = @word_input.val().replace(/[^a-zA-Z]/g, '.')
+        @word_input.val(word)
+        misses = @misses_input.val()
         results = @solver.solve(word, misses.split(""))
         possibilities = results.get_possibilities()
-        @el.find('.cheat_words').html("<p>#{possibilities.join(" ")}</p>")
+        @draw_words(possibilities)
         @draw_letter_freqs(results.get_letter_freqs(), possibilities.length)
 
+    draw_words: (possibilities) ->
+        @cheat_words.html("<h1>Possible words:</h1><p>#{possibilities.join(" ")}</p>")
+
     draw_letter_freqs: (freqs, wordcount) ->
-        htmltext = ""
-        for v in freqs
-            [freq, letter] = v
-            likelihood = (100.0 * freq) / wordcount
-            htmltext += "<div style='background-color: blue; height: 1em; margin: 1px; width: #{likelihood}px; float: left;'></div><p>#{letter} #{likelihood.toFixed(2)}%</p>"
-        @el.find('.cheat_letters').html(htmltext)
+        if freqs.length is 0
+            @cheat_letters.html("")
+        else
+            likely_letters = (f[1] for f in freqs when f[0] == freqs[0][0])
+            htmltext = "<h1>The most likely next letter#{if likely_letters.length == 1 then " is" else "s are"}:</h1>
+                        <h2>#{likely_letters.join(", ")}</h2>
+                        <h1>with probability #{(100.0 * freqs[0][0] / wordcount).toFixed(2)}%</h1>"
+            @cheat_letters.html(htmltext)
+            graph_div = $("<div class='pmchart clearfix'></div>")
+            for v in freqs
+                [freq, letter] = v
+                likelihood = (100.0 * freq) / wordcount
+                graph_div.append "<div class='pmcolumn' style='width: #{100.0 / freqs.length}%'>
+                                    <div style='bottom: #{likelihood}px'>
+                                        <p>#{letter}</p>
+                                    </div>
+                                    <div class='columndata' style='height: #{likelihood}px;'></div>
+                                  </div>"
+            graph_div.append "<p>100%</p>"
+            @cheat_letters.append(graph_div)
 
     update_options: (options) ->
         @options = options

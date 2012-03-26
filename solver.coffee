@@ -44,12 +44,15 @@ class SolverResults
 
     get_letter_freqs: ->
         if not @scores?
-            # Calculate the most likely unguessed letter
-            # ALL OF THE LETTERS!
-            concat = @possibilities.join("").split("")
-            # Calculate the letter frequencies for each non-guessed letter,
-            #   the max being the most likely
-            chars = (x for x in concat.unique() when x not in @bad_chars)
-            @scores = ([(y for y in @possibilities when x in y).length, x] for x in chars)
-            @scores.sort((a,b) -> b[0] - a[0])
+            if @possibilities.length is 0
+                @scores = []
+            else
+                # Calculate the most likely unguessed letter
+                # ALL OF THE LETTERS!
+                concat = @possibilities.join("").split("")
+                # Calculate the letter frequencies for each non-guessed letter,
+                #   the max being the most likely
+                chars = (x for x in concat.unique() when x not in @bad_chars)
+                @scores = ([(y for y in @possibilities when x in y).length, x] for x in chars)
+                @scores.sort((a,b) -> b[0] - a[0])
         return @scores

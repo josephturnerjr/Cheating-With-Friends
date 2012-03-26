@@ -291,3 +291,90 @@ td { vertical-align: top; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
 }
+
+
+#container {
+  width: 1020px;
+  margin: 0 auto;
+}
+
+#cheatmain > div{
+  border-radius: 5px;
+}
+.cheat_input {
+  float: left;
+  width: 280px;
+  background-color: #4ba2ab;
+  margin: 0 10px;
+  padding: 0 20px 20px 20px;
+}
+
+.cheat_letters {
+  float: left;
+  width: 280px;
+  background-color: #234280;
+  color: white;
+  text-align: center;
+  margin: 0 10px;
+  padding: 0 20px 20px 20px;
+}
+
+.cheat_letters h1 {
+  font-size: 1.6em;
+}
+.cheat_letters h2 {
+  font-size: 2.0em;
+  text-transform: uppercase;
+}
+.pmchart {
+  position: relative;
+  text-align: center;
+  border-top: 1px dashed white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  height: 100px; 
+  border-radius: 0px;
+}
+
+.pmchart div {
+  border-radius: 0px;
+}
+
+.pmchart > p {
+  color: gray;
+  margin: 0; 
+  position: absolute; 
+  right:0%; 
+  bottom: 100%;
+}
+
+.pmcolumn {
+  position: relative;
+  float: left; 
+  height: 100%;
+}
+.pmcolumn p {
+  margin: 0px;
+  font-size: 0.8em;
+  position: relative; 
+}
+.pmcolumn div {
+  text-align: center;
+  position: absolute; 
+  left: 0%; 
+  bottom: 0%;
+  width: 100%;
+}
+.pmcolumn .columndata {
+  background-color: #b9444f;
+}
+
+.cheat_words {
+  float: left;
+  width: 280px;
+  margin: 0 10px;
+  padding: 0 20px 20px 20px;
+  background-color: green;
+}
+
