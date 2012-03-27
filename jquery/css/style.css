@@ -323,6 +323,7 @@ header h1 {
   border-radius: 3px;
   box-shadow: 5px 5px #3a3a3a;
   background-color: #fcfbf3;
+  min-height: 225px;
 }
 
 .cheat_input {

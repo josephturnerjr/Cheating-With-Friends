@@ -1,13 +1,8 @@
-balloonx = 0
-balloony = 0
-
-window.moveballoon =  ->
-    balloonx += 1
-    balloony += 1
-    $('.balloon').css("top", balloony).css("left", balloonx)
+addballoon = () ->
+    $("<div class='balloon'></div>").appendTo("body").floatingballoon()
 
 onready = () ->
     $("#cheatmain").cheatwidget()
-    setInterval('window.moveballoon()', 50)
+    setInterval((() -> addballoon()), 3000)
 
 $(document).ready(onready)
