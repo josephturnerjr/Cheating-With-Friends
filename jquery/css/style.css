@@ -293,28 +293,42 @@ td { vertical-align: top; }
 }
 
 body {
+  position:relative;
   background-color: #234280;
   color: #3a3a3a;
 }
 
+body .balloon {
+  position: fixed;
+  opacity: 0.5;
+  z-index: -1;
+}
+
 header h1 {
+  padding-top: 45px;
+  padding-left: 5px;
+  background-image: url('/img/header.png');
+  background-repeat: no-repeat;
   margin-left: 10px;
   color: #fcfbf3;
+  font-size: 1.8em;
 }
 
 #container {
-  width: 1020px;
+  max-width: 1020px;
   margin: 0 auto;
 }
 
 #cheatmain > div{
-  border-radius: 5px;
+  border-radius: 3px;
+  box-shadow: 5px 5px #3a3a3a;
   background-color: #fcfbf3;
 }
+
 .cheat_input {
   float: left;
   width: 280px;
-  margin: 0 10px;
+  margin: 10px;
   padding: 0 20px 20px 20px;
 }
 
@@ -323,7 +337,7 @@ header h1 {
   width: 280px;
   background-color: #234280;
   text-align: center;
-  margin: 0 10px;
+  margin: 10px;
   padding: 0 20px 20px 20px;
 }
 
@@ -380,7 +394,7 @@ header h1 {
 .cheat_words {
   float: left;
   width: 280px;
-  margin: 0 10px;
+  margin: 10px;
   padding: 0 20px 20px 20px;
 }
 
