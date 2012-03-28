@@ -17,17 +17,24 @@ class FloatingBalloon
     constructor: (el, options) ->
         @el = el
         @swingwidth = 50
+        @el.html("<img src='/img/balloon.png' />")
+        _this = this
+        @int_id = setInterval((() -> _this.move()), 50)
+        @init()
+
+    init: ->
+        @height = @el.outerHeight(true)
         @inittop = $(window).height()
         @initleft = Math.random() * $(window).width()
-        console.log @inittop, @initleft
         @addtop = 0
         @lefttheta = 2 * Math.PI * Math.random()
-        @el.html("<img src='/img/balloon.png' />").css("top", @inittop).css("left", @initleft)
-        _this = this
-        setInterval((() -> _this.move()), 50)
-
+        @el.css("top", @inittop).css("left", @initleft)
+        
     move: ->
+        console.log "here"
         @addtop -= 1
         @lefttheta += 0.01
         @el.css("top", @inittop + @addtop).css("left", @initleft + @swingwidth * Math.sin(@lefttheta))
+        if @inittop + @addtop + @height < 0
+            @init()
         

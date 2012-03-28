@@ -22,6 +22,15 @@ class CheatWidget
     init: (data, textStatus, jqXHR) =>
         @solver = new Solver(data)
         template = $("
+                      <div id='cheat_explain'>
+                        <p>
+                        <em>Everyone knows that winning is the fun part of any game.</em>
+                        Stop losing at Hanging with Friends to those nerds you call opponents.
+                        </p>
+                        <p>
+                        Input your challenge below and bask in the glory of the only thing that's important: victory!
+                        </p>
+                      </div>
                       <div class='cheat_input'>
                         <h2></h2>
                         <p>Enter the word, using any non-alphabet character for an unknown:</p>

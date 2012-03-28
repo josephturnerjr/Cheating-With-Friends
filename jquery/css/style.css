@@ -326,6 +326,17 @@ header h1 {
   min-height: 225px;
 }
 
+#cheatmain > #cheat_explain {
+  min-height: 0px;
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+#cheat_explain p {
+  padding: 0px;
+  margin: 10px 0px;
+}
+
 .cheat_input {
   float: left;
   width: 280px;
