@@ -17,10 +17,6 @@ class CheatWidget
     constructor: (el, options) ->
         @el = el
         @update_options(options)
-        $.get('wordlist.txt', @init)
-
-    init: (data, textStatus, jqXHR) =>
-        @solver = new Solver(data)
         template = $("
                       <div id='cheat_explain'>
                         <p>
@@ -34,9 +30,9 @@ class CheatWidget
                       <div class='cheat_input'>
                         <h2></h2>
                         <p>Enter the word, using any non-alphabet character for an unknown:</p>
-                        <input name='word' type='text'></input>
+                        <input name='word' type='text' value='Loading dictionary...' disabled></input>
                         <p>Enter any excluded letters (i.e. letters you've tried that weren't in the word):</p>
-                        <input name='misses' type='text'></input>
+                        <input name='misses' type='text' value='Loading dictionary...' disabled></input>
                       </div>
                       <div class='cheat_letters'>
                         <h2>The most likely next letter is:</h2>
@@ -46,10 +42,15 @@ class CheatWidget
                       </div>
                      ")
         @el.append template 
-        @word_input = @el.find('input[name="word"]').keyup(=>@handle_word())
-        @misses_input = @el.find('input[name="misses"]').keyup(=>@handle_word())
+        $.get('wordlist.txt', @init)
+
+    init: (data, textStatus, jqXHR) =>
+        @solver = new Solver(data)
+        @word_input = @el.find('input[name="word"]').prop('disabled', false).val("ch..t.n.").keyup(=>@handle_word())
+        @misses_input = @el.find('input[name="misses"]').prop('disabled', false).val("rs").keyup(=>@handle_word())
         @cheat_words = @el.find('.cheat_words')
         @cheat_letters = @el.find('.cheat_letters')
+        @word_input = @el.find('input[name="word"]').keyup()
 
     handle_word: () ->
         word = @word_input.val().replace(/[^a-zA-Z]/g, '.')

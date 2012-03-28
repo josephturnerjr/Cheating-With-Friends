@@ -307,7 +307,7 @@ body .balloon {
 header h1 {
   padding-top: 45px;
   padding-left: 5px;
-  background-image: url('/img/header.png');
+  background-image: url('../img/header.png');
   background-repeat: no-repeat;
   margin-left: 10px;
   color: #fcfbf3;

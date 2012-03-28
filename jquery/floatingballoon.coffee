@@ -17,7 +17,7 @@ class FloatingBalloon
     constructor: (el, options) ->
         @el = el
         @swingwidth = 50
-        @el.html("<img src='/img/balloon.png' />")
+        @el.html("<img src='img/balloon.png' />")
         _this = this
         @int_id = setInterval((() -> _this.move()), 50)
         @init()
