@@ -1,0 +1,2 @@
+all:
+	cp ../solver.py .

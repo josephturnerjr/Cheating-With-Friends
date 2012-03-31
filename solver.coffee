@@ -8,8 +8,7 @@ Array::unique = ->
 class Solver
     constructor: (data) ->
         words = new String(data).trim().split(' ')
-        words = (x.toLowerCase() for x in words)
-        words = words.unique()
+        words = (x.toLowerCase() for x in words).unique()
         # Parse the words into lengths
         lengths = (w.length for w in words).unique()
         word_sets = (x for x in words when x.length == l for l in lengths)

@@ -6,7 +6,6 @@ solver = require('./solver')
 class NodeSolver
     constructor: (wordfile) ->
         data = fs.readFileSync wordfile
-        console.log solver
         @solver = new solver.Solver(data)
         @tried = []
 
@@ -36,7 +35,7 @@ class NodeSolver
                 process.exit()
             else
                 console.log "Here are the options: #{possibilities.join(" ")}"
-                console.log "The most likely next letter is #{freqs[0][1]} (probability: #{100.0 * freqs[0][0] / possibilities.length}"
+                console.log "The most likely next letter is #{freqs[0][1]} (probability: #{100.0 * freqs[0][0] / possibilities.length}%)"
                 @tried.push(freqs[0][1])
                 @go()
 
